@@ -1,3 +1,3 @@
 # LEDA
 
-Repository for LEDA (Algorithms and Data Structures) classes
+Repository for LEDA (Data Structures and Algorithms) classes
