@@ -19,6 +19,8 @@ public class StudentSortingTest {
 	private Integer[] vetorVazio = {};
 	private Integer[] vetorValoresRepetidos;
 	private Integer[] vetorValoresIguais;
+	private Integer[] vetorDoisElementos;
+	private Integer[] vetorUmElemento;
 
 	public AbstractSorting<Integer> implementation;
 
@@ -30,6 +32,8 @@ public class StudentSortingTest {
 				11, 18, 36 });
 		populaVetorRepetido(new Integer[] { 4, 9, 3, 4, 0, 5, 1, 4 });
 		populaVetorIgual(new Integer[] { 6, 6, 6, 6, 6, 6 });
+		populaVetorDoisElementos(new Integer[] {2, 1});
+		populaVetorUmElemento(new Integer[] {1});
 
 		getImplementation();
 	}
@@ -61,6 +65,16 @@ public class StudentSortingTest {
 
 	public void populaVetorIgual(Integer[] arrayPadrao) {
 		this.vetorValoresIguais = Arrays
+				.copyOf(arrayPadrao, arrayPadrao.length);
+	}
+
+	public void populaVetorDoisElementos(Integer[] arrayPadrao) {
+		this.vetorDoisElementos = Arrays
+				.copyOf(arrayPadrao, arrayPadrao.length);
+	}
+
+	public void populaVetorUmElemento(Integer[] arrayPadrao) {
+		this.vetorUmElemento = Arrays
 				.copyOf(arrayPadrao, arrayPadrao.length);
 	}
 
@@ -102,6 +116,12 @@ public class StudentSortingTest {
 	public void testSort05() {
 		genericTest(vetorValoresRepetidos);
 	}
+
+	@Test
+	public void testSort06() { genericTest(vetorDoisElementos); }
+
+	@Test
+	public void testSort07() { genericTest(vetorUmElemento); }
 
 	// MÉTODOS QUE OS ALUNOS PODEM CRIAR
 	/**
