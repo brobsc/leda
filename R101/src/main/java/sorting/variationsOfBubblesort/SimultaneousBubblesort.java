@@ -13,7 +13,31 @@ import sorting.AbstractSorting;
  */
 public class SimultaneousBubblesort<T extends Comparable<T>> extends
 		AbstractSorting<T> {
-	public void sort(T[] array, int leftIndex, int rightIndex) {
 
+	public void sort(T[] array, int leftIndex, int rightIndex) {
+	  int j = rightIndex;
+
+		for (int i = leftIndex; i < j; i++) {
+		  bubble(array, i, j);
+		  bubbleBack(array, i, j - 1);
+		  j -= 1;
+		}
+
+	}
+
+	public void bubble(T[] array, int start, int end) {
+			for (int i = start; i < end; i++) {
+				if(array[i].compareTo(array[i + 1]) > 0) {
+					util.Util.swap(array, i, i + 1);
+				}
+			}
+	}
+
+	public void bubbleBack(T[] array, int start, int end) {
+		for (int i = end; i > start; i--) {
+			if(array[i].compareTo(array[i - 1]) < 0) {
+				util.Util.swap(array, i, i - 1);
+			}
+		}
 	}
 }
