@@ -22,7 +22,6 @@ public class SimultaneousBubblesort<T extends Comparable<T>> extends
 		  bubbleBack(array, i, j - 1);
 		  j -= 1;
 		}
-
 	}
 
 	private void bubble(T[] array, int start, int end) {
