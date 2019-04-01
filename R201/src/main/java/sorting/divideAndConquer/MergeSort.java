@@ -14,24 +14,45 @@ public class MergeSort<T extends Comparable<T>> extends AbstractSorting<T> {
 
 	@Override
 	public void sort(T[] array, int leftIndex, int rightIndex) {
-		if(leftIndex < 0 || rightIndex > array.length || leftIndex >= rightIndex) {
+		if (leftIndex < 0 || rightIndex >= array.length || leftIndex >= rightIndex) {
 			return;
 		}
 
 		int med = (leftIndex + rightIndex) / 2;
 		sort(array, leftIndex, med);
 		sort(array, med + 1, rightIndex);
-		merge(array, leftIndex, med, med + 1, rightIndex);
+		merge(array, leftIndex, med, rightIndex);
 	}
 
-	private void merge(T[] array, int from1, int to1, int from2, int to2) {
-		if (from1 >= to1 || from2 >= to2) {
-			return;
+	private void merge(T[] array, int start, int med, int end) {
+		T[] aux = Arrays.copyOf(array, array.length);
+
+		int i = start;
+		int j = med + 1;
+		int k = start;
+
+		while (i <= med && j <= end) {
+			if (aux[i].compareTo(aux[j]) < 0) {
+				array[k] = aux[i];
+				i += 1;
+			} else {
+					array[k] = aux[j];
+					j += 1;
+			}
+
+			k += 1;
 		}
 
-		T[] aux = Arrays.copyOf(array, array.length);
-		if (array[from1].compareTo(array[from2]) < 0) {
+		while (j <= end) {
+			array[k] = aux[j];
+			j += 1;
+			k += 1;
+		}
 
+		while (i <= med) {
+			array[k] = aux[i];
+			i += 1;
+			k += 1;
 		}
 	}
 }
