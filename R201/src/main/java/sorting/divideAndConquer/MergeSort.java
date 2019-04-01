@@ -36,8 +36,8 @@ public class MergeSort<T extends Comparable<T>> extends AbstractSorting<T> {
 				array[k] = aux[i];
 				i += 1;
 			} else {
-					array[k] = aux[j];
-					j += 1;
+				array[k] = aux[j];
+				j += 1;
 			}
 
 			k += 1;
