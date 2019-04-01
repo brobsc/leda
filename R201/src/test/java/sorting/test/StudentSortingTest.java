@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import sorting.AbstractSorting;
+import sorting.divideAndConquer.QuickSort;
 
 public class StudentSortingTest {
 
@@ -15,11 +16,19 @@ public class StudentSortingTest {
 	private Integer[] vetorVazio = {};
 	private Integer[] vetorValoresRepetidos;
 	private Integer[] vetorValoresIguais;
+	private Integer[] grandeRandom;
 
 	public AbstractSorting<Integer> implementation;
 
 	@Before
 	public void setUp() {
+		Integer[] arrayRandom = new Integer[20];
+
+		for (int i = 0; i < arrayRandom.length; i++) {
+			arrayRandom[i] = (Integer) Math.ceil(Math.random() * 100);
+		}
+
+
 		populaVetorTamanhoPar(new Integer[] { 30, 28, 7, 29, 11, 26, 4, 22, 23,
 				31 });
 		populaVetorTamanhoImpar(new Integer[] { 6, 41, 32, 7, 26, 4, 37, 49,
@@ -36,10 +45,7 @@ public class StudentSortingTest {
 	 * do aluno
 	 */
 	private void getImplementation() {
-		// TODO O aluno deve instanciar sua implementação abaixo ao invés de
-		// null
-		this.implementation = null;
-		Assert.fail("Implementation not provided");
+		this.implementation = new QuickSort<>();
 	}
 
 	public void populaVetorTamanhoPar(Integer[] arrayPadrao) {
