@@ -25,14 +25,24 @@ public class ThreeWayQuickSort<T extends Comparable<T>> extends
 	 **/
 	@Override
 	public void sort(T[] array, int leftIndex, int rightIndex) {
-		if (leftIndex < 0 || rightIndex >= array.length || leftIndex >= rightIndex) {
-			return;
+		if (sortable(array, leftIndex, rightIndex)) {
+			int smallerPart = partition(array, leftIndex, rightIndex);
+			int biggerPart = partitionBig(array, smallerPart, rightIndex);
+			sort(array, leftIndex, smallerPart);
+			sort(array, biggerPart, rightIndex);
+		}
+	}
+
+	private boolean sortable(T[] array, int leftIndex, int rightIndex) {
+		boolean result = leftIndex >= 0 && rightIndex < array.length && leftIndex < rightIndex;
+
+		for (T obj : array) {
+			if (obj == null) {
+				result = false;
+			}
 		}
 
-		int smallerPart = partition(array, leftIndex, rightIndex);
-		int biggerPart = partitionBig(array, smallerPart, rightIndex);
-		sort(array, leftIndex, smallerPart);
-		sort(array, biggerPart, rightIndex);
+		return result;
 	}
 
 	private int partition(T[] array, int pivot, int end) {
