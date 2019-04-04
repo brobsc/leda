@@ -206,9 +206,20 @@ public class StudentSortingTest {
 		for (AbstractSorting implementation : implementations) {
 			Integer[] arrayToBeSorted = new Integer[15];
 			for (int i = 0; i < arrayToBeSorted.length; i++) {
-				int rand = (int) Math.round(Math.random()) - 10;
+				int rand = (int) Math.round(Math.random() * 5) - 10;
 				arrayToBeSorted[i] = rand;
 			}
+			Integer[] arrayExpected = Arrays.copyOf(arrayToBeSorted, arrayToBeSorted.length);
+			Arrays.sort(arrayExpected);
+			implementation.sort(arrayToBeSorted, 0, arrayExpected.length - 1);
+			Assert.assertArrayEquals(arrayExpected, arrayToBeSorted);
+		}
+	}
+
+	@Test
+	public void testNegativesArray() {
+		for (AbstractSorting implementation : implementations) {
+			Integer[] arrayToBeSorted = new Integer[]{-5, -2, -3, -7, -9};
 			Integer[] arrayExpected = Arrays.copyOf(arrayToBeSorted, arrayToBeSorted.length);
 			Arrays.sort(arrayExpected);
 			implementation.sort(arrayToBeSorted, 0, arrayExpected.length - 1);
