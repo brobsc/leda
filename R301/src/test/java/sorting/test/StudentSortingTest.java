@@ -7,6 +7,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import sorting.AbstractSorting;
+import sorting.linearSorting.CountingSort;
+import sorting.linearSorting.ExtendedCountingSort;
 
 public class StudentSortingTest {
 
@@ -16,7 +18,7 @@ public class StudentSortingTest {
 	private Integer[] vetorValoresRepetidos;
 	private Integer[] vetorValoresIguais;
 
-	public AbstractSorting<Integer> implementation;
+	public AbstractSorting<Integer>[] implementations;
 
 	@Before
 	public void setUp() {
@@ -36,10 +38,10 @@ public class StudentSortingTest {
 	 * do aluno
 	 */
 	private void getImplementation() {
-		// TODO O aluno deve instanciar sua implementação abaixo ao invés de
-		// null
-		this.implementation = null;
-		Assert.fail("Implementation not provided");
+		this.implementations = new AbstractSorting[]{
+		        new CountingSort()
+            // new ExtendedCountingSort()
+		};
 	}
 
 	public void populaVetorTamanhoPar(Integer[] arrayPadrao) {
@@ -64,14 +66,19 @@ public class StudentSortingTest {
 
 	// MÉTODOS DE TESTE
 
-	public void genericTest(Integer[] array) {
-		Integer[] copy1 = {};
-		if(array.length > 0){
-			copy1 = Arrays.copyOf(array, array.length);			
+	public void genericTest(Integer[] array, Integer[] arrayExpected) {
+		for (AbstractSorting implementation : this.implementations) {
+			Integer[] arrayToBeSorted = Arrays.copyOf(array, array.length);
+
+			implementation.sort(arrayToBeSorted);
+			Assert.assertArrayEquals(arrayExpected, arrayToBeSorted);
 		}
-		implementation.sort(array);
-		Arrays.sort(copy1);
-		Assert.assertArrayEquals(copy1, array);
+	}
+
+	private void genericTest(Integer[] originalArray) {
+		Integer[] arrayExpected = Arrays.copyOf(originalArray, originalArray.length);
+		Arrays.sort(arrayExpected);
+		genericTest(originalArray, arrayExpected);
 	}
 
 	@Test
@@ -106,4 +113,92 @@ public class StudentSortingTest {
 	 * SEGUIR A ESTRUTURA DOS MÉTODOS DE TESTE ACIMA DESCRITOS, ORDENANDO APENAS
 	 * UMA PARTE DO ARRAY.
 	 */
+
+	@Test
+	public void testSortUniqueElement() { genericTest(new Integer[]{1}); }
+
+	@Test
+	public void testSortSorted() { genericTest(new Integer[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}); }
+
+	@Test
+	public void testSortHasNull() {
+	    Integer[] originalArray = new Integer[]{1, 2, null, 0};
+		Integer[] arrayExpected = Arrays.copyOf(originalArray, originalArray.length);
+		genericTest(originalArray, arrayExpected);
+	}
+
+	@Test
+	public void testSortHasAllNull() {
+		Integer[] originalArray = new Integer[]{null, null, null, null};
+		Integer[] arrayExpected = Arrays.copyOf(originalArray, originalArray.length);
+		genericTest(originalArray, arrayExpected);
+	}
+
+
+	@Test
+	public void testSortLeftIndexSmallerThanZero() {
+		for (AbstractSorting implementation : implementations) {
+			Integer[] arrayToBeSorted = Arrays.copyOf(this.vetorTamPar, this.vetorTamPar.length);
+			implementation.sort(arrayToBeSorted, -1, 1);
+			Assert.assertArrayEquals(this.vetorTamPar, arrayToBeSorted);
+		}
+	}
+
+	@Test
+	public void testSortLeftIndexBiggerThanLength() {
+		for (AbstractSorting implementation : implementations) {
+			Integer[] arrayToBeSorted = Arrays.copyOf(this.vetorTamPar, this.vetorTamPar.length);
+			implementation.sort(arrayToBeSorted, arrayToBeSorted.length + 1, arrayToBeSorted.length - 1);
+			Assert.assertArrayEquals(this.vetorTamPar, arrayToBeSorted);
+		}
+	}
+
+	@Test
+	public void testSortLeftIndexBiggerThanRightIndex() {
+		for (AbstractSorting implementation : implementations) {
+			Integer[] arrayToBeSorted = Arrays.copyOf(this.vetorTamPar, this.vetorTamPar.length);
+			implementation.sort(arrayToBeSorted, 3, 2);
+			Assert.assertArrayEquals(this.vetorTamPar, arrayToBeSorted);
+		}
+	}
+
+	@Test
+	public void testSortRightIndexSmallerThanArrayLength() {
+		for (AbstractSorting implementation : implementations) {
+			Integer[] arrayToBeSorted = Arrays.copyOf(this.vetorTamPar, this.vetorTamPar.length);
+			implementation.sort(arrayToBeSorted, 0, arrayToBeSorted.length + 1);
+			Assert.assertArrayEquals(this.vetorTamPar, arrayToBeSorted);
+		}
+	}
+
+	@Test
+	public void testSortUsingLeftIndex() {
+		for (AbstractSorting implementation : implementations) {
+			Integer[] arrayToBeSorted = new Integer[]{5, 3, 2, 1, 6, 4};
+			Integer[] arrayExpected = new Integer[]{5, 3, 2, 1, 4, 6};
+			implementation.sort(arrayToBeSorted, 3, arrayToBeSorted.length - 1);
+			Assert.assertArrayEquals(arrayExpected, arrayToBeSorted);
+		}
+	}
+
+	@Test
+	public void testSortUsingRightIndex() {
+		for (AbstractSorting implementation : implementations) {
+			Integer[] arrayToBeSorted = new Integer[]{5, 3, 2, 1, 6, 4};
+			Integer[] arrayExpected = new Integer[]{2, 3, 5, 1, 6, 4};
+			implementation.sort(arrayToBeSorted, 0, 2);
+			Assert.assertArrayEquals(arrayExpected, arrayToBeSorted);
+		}
+	}
+
+	@Test
+	public void testSortUsingLeftIndexAndRightIndex() {
+		for (AbstractSorting implementation : implementations) {
+			Integer[] arrayToBeSorted = new Integer[]{5, 3, 2, 1, 6, 4};
+			Integer[] arrayExpected = new Integer[]{5, 3, 1, 2, 6, 4};
+			implementation.sort(arrayToBeSorted, 2, 4);
+			Assert.assertArrayEquals(arrayExpected, arrayToBeSorted);
+		}
+	}
+
 }
