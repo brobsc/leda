@@ -2,6 +2,8 @@ package sorting.linearSorting;
 
 import sorting.AbstractSorting;
 
+import java.util.Arrays;
+
 /**
  * Classe que implementa a estratégia de Counting Sort vista em sala. Procure
  * evitar desperdicio de memoria alocando o array de contadores com o tamanho
@@ -12,8 +14,59 @@ public class CountingSort extends AbstractSorting<Integer> {
 
 	@Override
 	public void sort(Integer[] array, int leftIndex, int rightIndex) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Not implemented yet!");
+		if(sortable(array, leftIndex, rightIndex)) {
+			int[] countingArray = countAndAccumulate(array, leftIndex, rightIndex);
+			Integer[] aux = Arrays.copyOfRange(array, leftIndex, rightIndex + 1);
+
+			for (int i = aux.length - 1; i >= 0; i--) {
+			  int value = aux[i];
+			  int newIndex = countingArray[value] - 1; // -1 to make it 0 indexed
+				array[newIndex + leftIndex] = value;
+				countingArray[value] -= 1;
+			}
+		}
 	}
 
+	private int[] countAndAccumulate(Integer[] array, int leftIndex, int rightIndex) {
+	  int max = getMax(array, leftIndex, rightIndex);
+
+	  // Length is max + 1 so we array is from 0...max (inclusive)
+	  int[] result = new int[max + 1];
+
+		for (int i = leftIndex; i <= rightIndex; i++) {
+			int value = array[i];
+			result[value] += 1;
+		}
+
+		for (int i = 1; i < result.length; i++) {
+			result[i] += result[i - 1];
+		}
+
+		return result;
+	}
+
+	private int getMax(Integer[] array, int leftIndex, int rightIndex) {
+		int max = 0;
+
+		for (int i = leftIndex; i <= rightIndex; i++) {
+			max = Math.max(array[i], max);
+		}
+
+		return max;
+	}
+
+	private boolean sortable(Integer[] array, int leftIndex, int rightIndex) {
+		boolean result = leftIndex >= 0 && rightIndex < array.length && leftIndex < rightIndex;
+
+		int i = 0;
+
+		while (i < array.length && result) {
+			if (array[i] == null) {
+				result = false;
+			}
+			i++;
+		}
+
+		return result;
+	}
 }
