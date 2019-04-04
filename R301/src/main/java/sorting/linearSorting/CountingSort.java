@@ -20,9 +20,9 @@ public class CountingSort extends AbstractSorting<Integer> {
 
 			for (int i = aux.length - 1; i >= 0; i--) {
 			  int value = aux[i];
-			  int newIndex = countingArray[value] - 1; // -1 to make it 0 indexed
-				array[newIndex + leftIndex] = value;
 				countingArray[value] -= 1;
+			  int newIndex = countingArray[value];
+				array[newIndex + leftIndex] = value;
 			}
 		}
 	}
@@ -30,7 +30,7 @@ public class CountingSort extends AbstractSorting<Integer> {
 	private int[] countAndAccumulate(Integer[] array, int leftIndex, int rightIndex) {
 	  int max = getMax(array, leftIndex, rightIndex);
 
-	  // Length is max + 1 so we array is from 0...max (inclusive)
+	  // Length is max + 1 so the array is from 0...max (inclusive)
 	  int[] result = new int[max + 1];
 
 		for (int i = leftIndex; i <= rightIndex; i++) {
