@@ -39,8 +39,8 @@ public class StudentSortingTest {
 	 */
 	private void getImplementation() {
 		this.implementations = new AbstractSorting[]{
-		        new CountingSort()
-            // new ExtendedCountingSort()
+		        // new CountingSort(),
+                new ExtendedCountingSort()
 		};
 	}
 
@@ -201,4 +201,18 @@ public class StudentSortingTest {
 		}
 	}
 
+	@Test
+	public void testRandomArray() {
+		for (AbstractSorting implementation : implementations) {
+			Integer[] arrayToBeSorted = new Integer[15];
+			for (int i = 0; i < arrayToBeSorted.length; i++) {
+				int rand = (int) Math.round(Math.random()) - 10;
+				arrayToBeSorted[i] = rand;
+			}
+			Integer[] arrayExpected = Arrays.copyOf(arrayToBeSorted, arrayToBeSorted.length);
+			Arrays.sort(arrayExpected);
+			implementation.sort(arrayToBeSorted, 0, arrayExpected.length - 1);
+			Assert.assertArrayEquals(arrayExpected, arrayToBeSorted);
+		}
+	}
 }
