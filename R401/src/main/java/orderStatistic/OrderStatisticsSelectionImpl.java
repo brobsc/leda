@@ -24,24 +24,6 @@ public class OrderStatisticsSelectionImpl<T extends Comparable<T>> implements Or
 	  return selectMin(array, k);
 	}
 
-	// ======================
-	// TODO: REMOVE
-	public static void main(String[] args) {
-		Integer[] a = new Integer[]{3,-7,-4,2,5,1};
-		OrderStatistics<Integer> test = new OrderStatisticsSelectionImpl<>();
-
-		System.out.println(test.getOrderStatistics(a, 0));
-		System.out.println(test.getOrderStatistics(a, 1));
-		System.out.println(test.getOrderStatistics(a, 2));
-		System.out.println(test.getOrderStatistics(a, 3));
-		System.out.println(test.getOrderStatistics(a, 4));
-		System.out.println(test.getOrderStatistics(a, 5));
-		System.out.println(test.getOrderStatistics(a, 6));
-		System.out.println(test.getOrderStatistics(a, 7));
-	}
-	// =====================
-
-
 	private T selectMin(T[] array, int k) {
 		T min = null;
 		if (k > 0 && k <= array.length) {
@@ -59,12 +41,12 @@ public class OrderStatisticsSelectionImpl<T extends Comparable<T>> implements Or
 
 	private T selectMin(T[] array, int k, T min) {
 		if (k > 0) {
-		  T nextMin = null;
+			T nextMin = null;
 
 			for (T element : array) {
 				if (element != null && element.compareTo(min) > 0) {
-				  if (nextMin == null) {
-				  	nextMin = element;
+					if (nextMin == null) {
+						nextMin = element;
 					} else {
 						nextMin = this.min(element, nextMin);
 					}
@@ -76,10 +58,6 @@ public class OrderStatisticsSelectionImpl<T extends Comparable<T>> implements Or
 
 
 		return min;
-	}
-
-	private boolean isValidSearch(T[] array, int k) {
-		return array.length >= k;
 	}
 
 	private T min(T a, T b) {
