@@ -7,7 +7,7 @@ public class OrderStatisticsSelectionImpl<T extends Comparable<T>> implements Or
 	 * de usar o selection sem modificar o array original. Note que seu algoritmo vai 
 	 * apenas aplicar sucessivas vezes o selection ate encontrar a estatistica de ordem 
 	 * desejada sem modificar o array original. 
-	 * 
+	 *
 	 * Restricoes:
 	 * - Preservar o array original, ou seja, nenhuma modificacao pode ser feita no 
 	 *   array original
@@ -21,11 +21,8 @@ public class OrderStatisticsSelectionImpl<T extends Comparable<T>> implements Or
 	 */
 	@Override
 	public T getOrderStatistics(T[] array, int k) {
-	  return selectMin(array, k);
-	}
-
-	private T selectMin(T[] array, int k) {
 		T min = null;
+
 		if (k > 0 && k <= array.length) {
 			min = array[0];
 
@@ -44,28 +41,28 @@ public class OrderStatisticsSelectionImpl<T extends Comparable<T>> implements Or
 			T nextMin = null;
 
 			for (T element : array) {
-				if (element != null && element.compareTo(min) > 0) {
-					if (nextMin == null) {
-						nextMin = element;
-					} else {
-						nextMin = this.min(element, nextMin);
-					}
+				if (isValidAndBigger(element, min)) {
+					nextMin = this.min(element, nextMin);
 				}
 			}
 
 			min = selectMin(array, k - 1, nextMin);
 		}
 
-
 		return min;
 	}
 
 	private T min(T a, T b) {
 		T min = a;
-		if (b.compareTo(a) < 0) {
+
+		if (b != null && b.compareTo(a) < 0) {
 			min = b;
 		}
 
 		return min;
+	}
+
+	private boolean isValidAndBigger(T a, T b) {
+		return (a != null && a.compareTo(b) > 0);
 	}
 }
