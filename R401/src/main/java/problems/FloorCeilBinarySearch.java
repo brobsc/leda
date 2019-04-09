@@ -24,6 +24,32 @@ public class FloorCeilBinarySearch implements FloorCeil {
 		return floorOrCeil(array, 0, array.length - 1, x, 0);
 	}
 
+	/**
+	 * Floor or ceil algorithm by checking where in the two partitions a smaller element is located.
+	 * By checking it on the first partition, we proceed the recursive search on the second,
+	 * effectively doing a ceil function (all elements on second are guaranteed to be no smaller than x).
+     *
+	 * [4 6 8 10], ceil 7
+	 * [4 6] [8 10]
+	 *    ^ (smaller, so proceed with the second)
+	 *      [8] [10]
+	 *       ^ (bigger, so get the first partition)
+	 *
+	 *      8 (smallest element bigger than 7)
+	 *
+	 * If we try and find it on the second partition and proceed the recursive search on the first,
+	 * we do a floor function (all elements on first partition are guaranteed to be no bigger than x).
+     *
+	 * [4 6 8 10], floor 7
+	 * [4 6] [8 10]
+	 *        ^ (bigger, so get the first partition)
+	 *
+	 * [4] [6]
+	 *      ^ (smaller, so proceed with the second)
+	 *
+	 *      6 (biggest element smaller than 7)
+	 *
+	 */
 	private Integer floorOrCeil(Integer[] array, int leftIndex, int rightIndex, Integer x, int compareOffset) {
 		Integer result = null;
 
