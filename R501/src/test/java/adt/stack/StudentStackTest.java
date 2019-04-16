@@ -1,12 +1,10 @@
 package adt.stack;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+
+import static org.junit.Assert.*;
 
 public class StudentStackTest {
 
@@ -31,9 +29,8 @@ public class StudentStackTest {
 	}
 
 	private void getImplementations() {
-		// TODO O aluno deve ajustar aqui para instanciar sua implementação
-		stack1 = null;
-		stack2 = null;
+		stack1 = new StackImpl<>(4);
+		stack2 = new StackImpl<>(2);
 		stack3 = null;
 	}
 
@@ -57,15 +54,15 @@ public class StudentStackTest {
 	@Test
 	public void testPush() {
 		try {
-			stack1.push(new Integer(5));
+			stack1.push(new Integer(4));
 		} catch (StackOverflowException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
 	@Test(expected = StackOverflowException.class)
 	public void testPushComErro() throws StackOverflowException {
+		stack1.push(new Integer(4)); // levanta excecao apenas se o tamanhonao
 		stack1.push(new Integer(5)); // levanta excecao apenas se o tamanhonao
 										// permitir outra insercao
 	}
@@ -83,6 +80,9 @@ public class StudentStackTest {
 	@Test(expected = StackUnderflowException.class)
 	public void testPopComErro() throws StackUnderflowException {
 		assertEquals(new Integer(3), stack1.pop()); // levanta excecao apenas se
+		assertEquals(new Integer(2), stack1.pop()); // levanta excecao apenas se
+		assertEquals(new Integer(1), stack1.pop()); // levanta excecao apenas se
+		assertEquals(new Integer(0), stack1.pop()); // levanta excecao apenas se
 													// stack1 for vazia
 	}
 }
