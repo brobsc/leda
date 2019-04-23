@@ -82,7 +82,7 @@ public class DoubleLinkedListImpl<T> extends SingleLinkedListImpl<T> implements
 		}
 	}
 
-	private DoubleLinkedListNode<T> getLast() {
+	public DoubleLinkedListNode<T> getLast() {
 		return last;
 	}
 
