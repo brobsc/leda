@@ -2,6 +2,7 @@ package adt.linkedList;
 
 public class DoubleLinkedListNode<T> extends SingleLinkedListNode<T> {
 	protected DoubleLinkedListNode<T> previous;
+	protected DoubleLinkedListNode<T> next;
 
 	public DoubleLinkedListNode() {
 	}
@@ -20,4 +21,12 @@ public class DoubleLinkedListNode<T> extends SingleLinkedListNode<T> {
 		this.previous = previous;
 	}
 
+	@Override
+	public DoubleLinkedListNode<T> getNext() {
+		return this.next;
+	}
+
+    public void setNext(DoubleLinkedListNode<T> next) {
+	    this.next = next;
+    }
 }
