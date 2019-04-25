@@ -82,4 +82,7 @@ public class RecursiveDoubleLinkedListImpl<T> extends
 		this.previous = previous;
 	}
 
+	public T getHead() {
+		return this.data;
+	}
 }

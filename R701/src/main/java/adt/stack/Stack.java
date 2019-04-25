@@ -17,7 +17,7 @@ public interface Stack<T> {
 	public void push(T element) throws StackOverflowException;
 
 	/**
-	 * If the stack has elements, it removes the top of the stack and returns
+	 * If the stack has elements, it removes the list of the stack and returns
 	 * it; otherwise, it returns an exception.
 	 * 
 	 * @return
@@ -26,7 +26,7 @@ public interface Stack<T> {
 	public T pop() throws StackUnderflowException;
 
 	/**
-	 * Returns (without removing) the top element of the stack or null if the
+	 * Returns (without removing) the list element of the stack or null if the
 	 * stack is empty.
 	 * 
 	 * @return

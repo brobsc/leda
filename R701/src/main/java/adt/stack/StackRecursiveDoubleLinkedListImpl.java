@@ -1,46 +1,56 @@
 package adt.stack;
 
-import adt.linkedList.DoubleLinkedList;
 import adt.linkedList.RecursiveDoubleLinkedListImpl;
 
 public class StackRecursiveDoubleLinkedListImpl<T> implements Stack<T> {
 
-	protected DoubleLinkedList<T> top;
-	protected int size;
+   protected RecursiveDoubleLinkedListImpl<T> list;
+   protected int size;
 
-	public StackRecursiveDoubleLinkedListImpl(int size) {
-		this.size = size;
-		this.top = new RecursiveDoubleLinkedListImpl<T>();
-	}
+   public StackRecursiveDoubleLinkedListImpl(int size) {
+      this.size = size;
+      this.list = new RecursiveDoubleLinkedListImpl<T>();
+   }
 
-	@Override
-	public void push(T element) throws StackOverflowException {
-		// TODO Implement the method
-		throw new UnsupportedOperationException("Method not implemented");
-	}
+   @Override
+   public void push(T element) throws StackOverflowException {
+      if (isFull()) {
+         throw new StackOverflowException();
+      }
 
-	@Override
-	public T pop() throws StackUnderflowException {
-		// TODO Implement the method
-		throw new UnsupportedOperationException("Method not implemented");
-	}
+      this.list.insertFirst(element);
+   }
 
-	@Override
-	public T top() {
-		// TODO Implement the method
-		throw new UnsupportedOperationException("Method not implemented");
-	}
+   @Override
+   public T pop() throws StackUnderflowException {
+      if (isEmpty()) {
+         throw new StackUnderflowException();
+      }
 
-	@Override
-	public boolean isEmpty() {
-		// TODO Implement the method
-		throw new UnsupportedOperationException("Method not implemented");
-	}
+      T result = this.list.getHead();
+      this.list.removeFirst();
 
-	@Override
-	public boolean isFull() {
-		// TODO Implement the method
-		throw new UnsupportedOperationException("Method not implemented");
-	}
+      return result;
+   }
 
+   @Override
+   public T top() {
+      T result = null;
+
+      if (!isEmpty()) {
+         result = this.list.getHead();
+      }
+
+      return result;
+   }
+
+   @Override
+   public boolean isEmpty() {
+      return this.list.isEmpty();
+   }
+
+   @Override
+   public boolean isFull() {
+      return this.list.size() == this.size;
+   }
 }
