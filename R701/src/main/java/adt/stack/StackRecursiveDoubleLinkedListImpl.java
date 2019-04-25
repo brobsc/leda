@@ -1,10 +1,11 @@
 package adt.stack;
 
+import adt.linkedList.DoubleLinkedList;
 import adt.linkedList.RecursiveDoubleLinkedListImpl;
 
 public class StackRecursiveDoubleLinkedListImpl<T> implements Stack<T> {
 
-   protected RecursiveDoubleLinkedListImpl<T> list;
+   protected DoubleLinkedList<T> list;
    protected int size;
 
    public StackRecursiveDoubleLinkedListImpl(int size) {
@@ -27,7 +28,7 @@ public class StackRecursiveDoubleLinkedListImpl<T> implements Stack<T> {
          throw new StackUnderflowException();
       }
 
-      T result = this.list.getHead();
+      T result = this.getList().getHead();
       this.list.removeFirst();
 
       return result;
@@ -38,7 +39,7 @@ public class StackRecursiveDoubleLinkedListImpl<T> implements Stack<T> {
       T result = null;
 
       if (!isEmpty()) {
-         result = this.list.getHead();
+         result = this.getList().getHead();
       }
 
       return result;
@@ -52,5 +53,10 @@ public class StackRecursiveDoubleLinkedListImpl<T> implements Stack<T> {
    @Override
    public boolean isFull() {
       return this.list.size() == this.size;
+   }
+
+   @SuppressWarnings("unchecked")
+   private RecursiveDoubleLinkedListImpl<T> getList() {
+      return (RecursiveDoubleLinkedListImpl) this.list;
    }
 }
