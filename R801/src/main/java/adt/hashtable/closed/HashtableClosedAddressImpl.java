@@ -64,7 +64,7 @@ public class HashtableClosedAddressImpl<T> extends AbstractHashtableClosedAddres
 
    @Override
    public void insert(T element) {
-     if (element != null) {
+     if (element != null && this.indexOf(element) == -1) {
         int hash = this.getHashFunction().hash(element);
         LinkedList<T> ll = this.getLinkedList(hash);
 
