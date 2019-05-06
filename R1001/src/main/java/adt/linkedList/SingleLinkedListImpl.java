@@ -10,38 +10,78 @@ public class SingleLinkedListImpl<T> implements LinkedList<T> {
 
 	@Override
 	public boolean isEmpty() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Not implemented!");
+		return this.getHead().isNIL();
 	}
 
 	@Override
 	public int size() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Not implemented!");
+		SingleLinkedListNode<T> current = this.getHead();
+		int size = 0;
+
+		while (!current.isNIL()) {
+			size++;
+			current = current.getNext();
+		}
+
+		return size;
 	}
 
 	@Override
 	public T search(T element) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Not implemented!");
+		T result = null;
+		if (element != null) {
+			SingleLinkedListNode<T> current = this.getHead();
+
+			while (!current.isNIL() && result == null) {
+				if (current.getData().equals(element)) {
+					result = element;
+				}
+
+				current = current.getNext();
+			}
+		}
+		return result;
 	}
 
 	@Override
 	public void insert(T element) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Not implemented!");
+	  if (element != null) {
+			SingleLinkedListNode<T> current = this.getHead();
+
+			while (!current.isNIL()) {
+				current = current.getNext();
+			}
+
+			current.setData(element);
+			current.setNext(new SingleLinkedListNode<>());
+		}
 	}
 
 	@Override
 	public void remove(T element) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Not implemented!");
+		SingleLinkedListNode<T> current = this.getHead();
+
+		while (!current.isNIL()) {
+		  if (current.getData().equals(element)) {
+		  	current.setData(current.getNext().getData());
+				current.setNext(current.getNext().getNext());
+			}
+		}
 	}
 
 	@Override
 	public T[] toArray() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Not implemented!");
+		int size = this.size();
+		T[] arr = (T[]) new Object[size];
+
+		SingleLinkedListNode<T> current = this.getHead();
+
+		for (int i = 0; i < arr.length; i++) {
+			arr[i] = current.getData();
+			current = current.getNext();
+		}
+
+		return arr;
 	}
 
 	public SingleLinkedListNode<T> getHead() {
@@ -51,5 +91,4 @@ public class SingleLinkedListImpl<T> implements LinkedList<T> {
 	public void setHead(SingleLinkedListNode<T> head) {
 		this.head = head;
 	}
-
 }
