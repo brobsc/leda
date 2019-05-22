@@ -87,12 +87,16 @@ public class BSTImpl<T extends Comparable<T>> implements BST<T> {
 
 	@Override
 	public BSTNode<T> maximum() {
-        return maximum(root);
+		BSTNode<T> result = null;
+		if (!isEmpty()) {
+			result = maximum(root);
+		}
+		return result;
 	}
 
 	private BSTNode<T> maximum(BSTNode<T> node) {
-		BSTNode<T> result = (BSTNode<T>) node.getParent();
-		if (!node.isEmpty()) {
+		BSTNode<T> result = node;
+		if (!node.getRight().isEmpty()) {
 			result = maximum((BSTNode<T>) node.getRight());
 		}
 		return result;
@@ -100,12 +104,16 @@ public class BSTImpl<T extends Comparable<T>> implements BST<T> {
 
 	@Override
 	public BSTNode<T> minimum() {
-		return minimum(root);
+	    BSTNode<T> result = null;
+	    if (!isEmpty()) {
+			result = minimum(root);
+		}
+		return result;
 	}
 
 	private BSTNode<T> minimum(BSTNode<T> node) {
-		BSTNode<T> result = (BSTNode<T>) node.getParent();
-		if (!node.isEmpty()) {
+	    BSTNode<T> result = node;
+		if (!node.getLeft().isEmpty()) {
 			result = minimum((BSTNode<T>) node.getLeft());
 		}
 		return result;
