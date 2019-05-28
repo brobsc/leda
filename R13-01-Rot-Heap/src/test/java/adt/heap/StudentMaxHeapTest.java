@@ -21,7 +21,7 @@ public class StudentMaxHeapTest {
 		// uma max heap aqui. Use instanciacao anonima da interface
 		// Comparator!!!!
 		Comparator<Integer> comparator = null;
-		heap = new HeapImpl<Integer>((a, b) -> a - b);
+		heap = new HeapImpl<Integer>(Comparator.naturalOrder());
 	}
 
 	@Test
