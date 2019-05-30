@@ -2,6 +2,7 @@ package adt.avltree;
 
 import adt.bst.BSTImpl;
 import adt.bst.BSTNode;
+import adt.bt.Util;
 
 /**
  * 
@@ -21,7 +22,7 @@ public class AVLTreeImpl<T extends Comparable<T>> extends BSTImpl<T> implements
 	public void insert(T element) {
 		super.insert(element);
 		BSTNode<T> node = search(element);
-		rebalance(node);
+		rebalanceUp(node);
 	}
 
 
@@ -29,7 +30,11 @@ public class AVLTreeImpl<T extends Comparable<T>> extends BSTImpl<T> implements
 	public void remove(T element) {
 		BSTNode<T> parentNode = (BSTNode<T>) search(element).getParent();
 		super.remove(element);
-		rebalanceUp(parentNode);
+		if (parentNode == null) {
+		    rebalanceUp(root);
+		} else {
+			rebalanceUp(parentNode);
+		}
 	}
 
 	// AUXILIARY
@@ -62,61 +67,31 @@ public class AVLTreeImpl<T extends Comparable<T>> extends BSTImpl<T> implements
 
 				if (calculateBalance(rightChild) > 0) {
 				  // Right child is pending left
-					rotateRight(rightChild);
+					Util.rightRotation(rightChild);
 				}
-				rotateLeft(node);
+				Util.leftRotation(node);
 			} else {
 				// Unbalanced to left
 				BSTNode<T> leftChild = (BSTNode<T>) node.getLeft();
 
 				if (calculateBalance(leftChild) < 0) {
 					// Left child is pending right
-					rotateLeft(leftChild);
+					Util.leftRotation(leftChild);
 				}
-				rotateRight(node);
+				Util.rightRotation(node);
 			}
 		}
-	}
-
-	private void rotateRight(BSTNode<T> node) {
-		BSTNode<T> left = (BSTNode<T>) node.getLeft();
-		BSTNode<T> newLeft = (BSTNode<T>) left.getRight();
-		BSTNode<T> oldRight = (BSTNode<T>) node.getRight();
-		T data = node.getData();
-
-		node.setData(left.getData());
-		node.setLeft(left.getLeft());
-		node.setRight((BSTNode<T>) new BSTNode.Builder<T>()
-				.data(data)
-				.right(oldRight)
-				.left(newLeft)
-				.parent(node)
-				.build());
-	}
-
-	private void rotateLeft(BSTNode<T> node) {
-		BSTNode<T> right = (BSTNode<T>) node.getRight();
-		BSTNode<T> newRight = (BSTNode<T>) right.getLeft();
-		BSTNode<T> oldLeft = (BSTNode<T>) node.getLeft();
-		T data = node.getData();
-
-		node.setData(right.getData());
-		node.setRight(right.getRight());
-		node.setLeft((BSTNode<T>) new BSTNode.Builder<T>()
-				.data(data)
-				.right(newRight)
-				.left(oldLeft)
-				.parent(node)
-				.build());
 	}
 
 	// AUXILIARY
 	protected void rebalanceUp(BSTNode<T> node) {
 		if (node != null) {
-			BSTNode<T> parent = ((BSTNode<T>) node.getParent());
 			rebalance(node);
+			BSTNode<T> parent = ((BSTNode<T>) node.getParent());
 			if (parent != null) {
 				rebalanceUp(parent);
+			} else {
+				this.root = node;
 			}
 		}
 	}

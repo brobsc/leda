@@ -69,4 +69,35 @@ public class StudentAVLTest {
 		assertEquals(NIL, avl.getRoot());
 		assertTrue(avl.isEmpty());
 	}
+
+	@Test
+	public void meusTestes(){
+		//50,40,42,35,67,21,99,76,48,49
+		AVLTreeImpl<Integer> myAvl = new AVLTreeImpl<>();
+		myAvl.insert(50);
+		myAvl.insert(40);
+		myAvl.insert(42);
+		//42 40 50
+		assertArrayEquals(myAvl.preOrder(),new Integer[]{42, 40, 50});
+		myAvl.insert(35);
+		myAvl.insert(67);
+		myAvl.insert(21);
+		// 42 35 21 40 50 67
+		assertArrayEquals(myAvl.preOrder(),new Integer[]{42, 35, 21, 40, 50, 67});
+		myAvl.insert(99);
+		myAvl.insert(76);
+		// 42 35 21 40 50 76 67 99
+		assertArrayEquals(myAvl.preOrder(),new Integer[]{42, 35, 21, 40, 67, 50, 99, 76});
+		myAvl.insert(48);
+		myAvl.insert(49);
+		// 42 35 21 40 50 48 49 76 67 99
+		assertArrayEquals(myAvl.preOrder(),new Integer[]{42,35,21,40,67,49,48,50,99,76});
+		myAvl.remove(35);
+		myAvl.remove(49);
+		myAvl.remove(40);
+		assertArrayEquals(myAvl.preOrder(),new Integer[]{67,42,21,50,48,99,76});
+		myAvl.remove(67);
+		assertArrayEquals(myAvl.preOrder(),new Integer[]{50,42,21,48,76,99});
+	}
+
 }
