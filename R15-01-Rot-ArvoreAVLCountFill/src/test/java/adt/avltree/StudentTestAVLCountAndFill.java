@@ -113,6 +113,8 @@ public class StudentTestAVLCountAndFill {
 		tree1.fillWithoutRebalance(new Integer[]{8, 4, 2, 1, 0, 3, 6, 5, 7, 12, 10, 9, 11, 14, 13, 15});
 		tree1.fillWithoutRebalance(new Integer[]{-2,-3,-4,-1,-7,-6,-5});
 		tree1.fillWithoutRebalance(new Integer[]{22, 23, 21, 25, 20, 24});
+		tree1.fillWithoutRebalance(new Integer[]{32, 33, 31, 35, 30, 34});
+		tree1.fillWithoutRebalance(new Integer[]{-12,-13,-14,-11,-17,-16,-15});
 
 		assertEquals(0, tree1.LLcount());
 		assertEquals(0, tree1.RRcount());
