@@ -5,6 +5,8 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Arrays;
+
 public class StudentTestAVLCountAndFill {
 
 	protected AVLCountAndFill<Integer> tree1;
@@ -58,8 +60,60 @@ public class StudentTestAVLCountAndFill {
 	@Test
 	public void testFillWithoutRebalance() {
 		tree1 = new AVLCountAndFillImpl<Integer>();
+		tree1.insert(-2);
+		tree1.insert(-1);
+		tree1.insert(-3);
 		Integer[] keys = { 8, 4, 12, 2, 6, 10, 14, 1, 3, 5, 7, 9, 11, 13, 15 };
 		tree1.fillWithoutRebalance(keys);
+		assertEquals(0, tree1.LLcount());
+		assertEquals(0, tree1.RRcount());
+		assertEquals(0, tree1.LRcount());
+		assertEquals(0, tree1.RLcount());
+		tree1.fillWithoutRebalance(keys);
+		assertEquals(0, tree1.RLcount());
+	}
+
+	@Test
+	public void testFillWithoutRebalanceOrder() {
+		tree1 = new AVLCountAndFillImpl<Integer>();
+		Integer[] keys = { 8, 4, 12, 2, 6, 10, 14, 1, 3, 5, 7, 9, 11, 13, 15 };
+		tree1.fillWithoutRebalance(keys);
+		assertEquals(0, tree1.LLcount());
+		assertEquals(0, tree1.RRcount());
+		assertEquals(0, tree1.LRcount());
+		assertEquals(0, tree1.RLcount());
+	}
+
+	@Test
+	public void testFillHeightLeft() {
+		tree1 = new AVLCountAndFillImpl<Integer>();
+
+		tree1.insert(2);
+		tree1.insert(1);
+		tree1.insert(3);
+		tree1.insert(0);
+
+		assertEquals(0, tree1.LLcount());
+		assertEquals(0, tree1.RRcount());
+		assertEquals(0, tree1.LRcount());
+		assertEquals(0, tree1.RLcount());
+
+		Integer[] keys = { 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
+		tree1.fillWithoutRebalance(keys);
+
+		assertEquals(0, tree1.LLcount());
+		assertEquals(0, tree1.RRcount());
+		assertEquals(0, tree1.LRcount());
+		assertEquals(0, tree1.RLcount());
+	}
+
+	@Test
+	public void testMultiplesFill() {
+		tree1 = new AVLCountAndFillImpl<Integer>();
+		tree1.fillWithoutRebalance(new Integer[]{8, 4, 2, 1, 0, 3, 6, 5, 7, 12, 10, 9, 11, 14, 13, 15});
+		tree1.fillWithoutRebalance(new Integer[]{22, 23, 21, 25, 20, 24});
+		tree1.fillWithoutRebalance(new Integer[]{-2,-3,-4,-1,-7,-6,-5});
+
 		assertEquals(0, tree1.LLcount());
 		assertEquals(0, tree1.RRcount());
 		assertEquals(0, tree1.LRcount());

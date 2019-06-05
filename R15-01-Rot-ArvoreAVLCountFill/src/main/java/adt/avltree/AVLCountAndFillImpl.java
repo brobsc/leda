@@ -3,9 +3,7 @@ package adt.avltree;
 import adt.bst.BSTNode;
 import adt.bt.Util;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
+import java.util.*;
 
 public class AVLCountAndFillImpl<T extends Comparable<T>> extends
 		AVLTreeImpl<T> implements AVLCountAndFill<T> {
@@ -16,7 +14,7 @@ public class AVLCountAndFillImpl<T extends Comparable<T>> extends
 	private int RLcounter;
 
 	public AVLCountAndFillImpl() {
-		
+
 	}
 
 	@Override
@@ -75,24 +73,48 @@ public class AVLCountAndFillImpl<T extends Comparable<T>> extends
 
 	@Override
 	public void fillWithoutRebalance(T[] array) {
-		ArrayList<T> auxArray = new ArrayList<>();
+		ArrayList<T> auxArray = new ArrayList<>(Arrays.asList(array));
 
-		while (!isEmpty()) {
-			T data = this.root.getData();
-			auxArray.add(data);
-			this.remove(data);
+		while (this.size() > 0) {
+			HashSet<T> leaves = new HashSet<>();
+			getLeavesOrder(this.root, leaves);
+
+			for (T leave : leaves) {
+				this.remove(leave);
+				auxArray.add(leave);
+			}
 		}
 
-		auxArray.addAll(Arrays.asList(array));
 		auxArray.sort(Comparator.naturalOrder());
+		ArrayList<List<T>> inserter = new ArrayList<>();
+		inserter.add(auxArray);
+		fill(inserter);
+	}
 
-		int i = 0;
-		int j = auxArray.size();
-		int m = (i + j) / 2;
+	private void fill(List<List<T>> array) {
+		List<T> toInsert = array.remove(0);
 
-		while (m >= 0) {
-		  this.insert(auxArray.get(m));
+		if (!toInsert.isEmpty()) {
+			int m = toInsert.size() / 2;
+			T el = toInsert.get(m);
 
+			this.insert(el);
+
+			array.add(toInsert.subList(0, m));
+			array.add(toInsert.subList(m + 1, toInsert.size()));
+			fill(array);
 		}
+	}
+
+	private HashSet<T> getLeavesOrder(BSTNode<T> node, HashSet<T> result) {
+		if (!node.isEmpty()) {
+			if (node.isLeaf()) {
+				result.add(node.getData());
+			} else {
+			  result.addAll(getLeavesOrder((BSTNode<T>) node.getLeft(), result));
+				result.addAll(getLeavesOrder((BSTNode<T>) node.getRight(), result));
+			}
+		}
+		return result;
 	}
 }
