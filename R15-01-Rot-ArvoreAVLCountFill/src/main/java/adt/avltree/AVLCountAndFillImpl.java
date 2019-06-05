@@ -76,7 +76,7 @@ public class AVLCountAndFillImpl<T extends Comparable<T>> extends
 		ArrayList<T> auxArray = new ArrayList<>(Arrays.asList(array));
 
 		while (this.size() > 0) {
-			HashSet<T> leaves = new HashSet<>();
+			List<T> leaves = new ArrayList<>();
 			getLeavesOrder(this.root, leaves);
 
 			for (T leave : leaves) {
@@ -106,15 +106,14 @@ public class AVLCountAndFillImpl<T extends Comparable<T>> extends
 		}
 	}
 
-	private HashSet<T> getLeavesOrder(BSTNode<T> node, HashSet<T> result) {
+	private void getLeavesOrder(BSTNode<T> node, List<T> result) {
 		if (!node.isEmpty()) {
 			if (node.isLeaf()) {
 				result.add(node.getData());
 			} else {
-			  result.addAll(getLeavesOrder((BSTNode<T>) node.getLeft(), result));
-				result.addAll(getLeavesOrder((BSTNode<T>) node.getRight(), result));
+				getLeavesOrder((BSTNode<T>) node.getLeft(), result);
+				getLeavesOrder((BSTNode<T>) node.getRight(), result);
 			}
 		}
-		return result;
 	}
 }
